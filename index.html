@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aether — Your Personal AI Mentor</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts: Syne (display) + JetBrains Mono (code/chat) -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       SIDEBAR — Goals & Check-in Dashboard
+  ═══════════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- App brand -->
+    <div class="brand">
+      <span class="brand-icon">◈</span>
+      <span class="brand-name">AETHER</span>
+    </div>
+
+    <!-- Daily Check-In card -->
+    <div class="panel" id="checkin-panel">
+      <div class="panel-header">
+        <span class="panel-label">DAILY CHECK-IN</span>
+        <span class="status-dot" id="checkin-status"></span>
+      </div>
+      <p class="panel-sub" id="checkin-date">Loading...</p>
+      <button class="btn-checkin" id="btn-checkin" onclick="startCheckIn()">
+        Start Today's Check-In
+      </button>
+    </div>
+
+    <!-- Goals section -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-label">ACTIVE GOALS</span>
+        <button class="btn-add" onclick="openAddGoal()" title="Add goal">+</button>
+      </div>
+      <ul class="goal-list" id="goal-list">
+        <!-- Goals rendered by JS -->
+      </ul>
+    </div>
+
+    <!-- Stats section -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-label">THIS WEEK</span>
+      </div>
+      <div class="stats-grid" id="stats-grid">
+        <!-- Stats rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Memory panel -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-label">MEMORY</span>
+        <button class="btn-add" onclick="clearMemory()" title="Clear memory" style="font-size:14px;">↺</button>
+      </div>
+      <p class="memory-info" id="memory-info">No details stored yet.</p>
+    </div>
+
+  </aside>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN — Chat Interface
+  ═══════════════════════════════════════════ -->
+  <main class="chat-area">
+
+    <!-- Top bar -->
+    <header class="chat-header">
+      <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+      <div class="chat-title">
+        <span class="online-dot"></span>
+        Aether is online
+      </div>
+      <button class="btn-clear-chat" onclick="clearChat()" title="Clear chat">Clear</button>
+    </header>
+
+    <!-- Chat messages -->
+    <div class="messages" id="messages">
+      <!-- Intro message -->
+      <div class="msg ai">
+        <div class="msg-avatar">A</div>
+        <div class="msg-content">
+          <p>I'm Aether. Your personal AI mentor — no sugarcoating, no excuses.</p>
+          <p>Tell me your name and your goals. I'll hold you to them.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Typing indicator -->
+    <div class="typing-indicator" id="typing" style="display:none;">
+      <div class="msg-avatar small">A</div>
+      <div class="dots"><span></span><span></span><span></span></div>
+    </div>
+
+    <!-- Input bar -->
+    <div class="input-bar">
+      <textarea
+        id="user-input"
+        placeholder="Type a message..."
+        rows="1"
+        onkeydown="handleKey(event)"
+        oninput="autoResize(this)"
+      ></textarea>
+      <button class="send-btn" onclick="sendMessage()" id="send-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       MODAL — Add Goal
+  ═══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()" style="display:none;"></div>
+  <div class="modal" id="goal-modal" style="display:none;">
+    <h3 class="modal-title">New Goal</h3>
+    <input type="text" class="modal-input" id="goal-name" placeholder="Goal name (e.g. Boxing)" />
+    <input type="text" class="modal-input" id="goal-target" placeholder="Daily target (e.g. 1 hour training)" />
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-confirm" onclick="addGoal()">Add Goal</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
